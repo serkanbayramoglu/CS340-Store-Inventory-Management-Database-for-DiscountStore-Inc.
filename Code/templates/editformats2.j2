@@ -1,0 +1,51 @@
+<!--
+-- -------------------------------------------------------------
+-- Project Step 3 DRAFT
+-- -------------------------------------------------------------
+-- Group:           78
+-- Team Name:       Database Due
+-- Team Members:    Emma Babcock & Serkan Bayramoglu
+-- -------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brands</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!--- Sales --->
+    {% if table_name == "Sales" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sale Id</th>
+                            <th>Invoice Number</th>
+                            <th>Invoice Date</th>
+                            <th>Sales Price (US$ pu)</th>
+                            <th>Sales Quantity</th>
+                            <th>Sales Manager</th>
+                            <th>Producer Model Number</th>
+                            <th>Customer</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="number" id="2sale_id" name="sale_id"></td>
+                            <td><input type="text" id="2invoice_number" name="invoice_number" ></td>
+                            <td><input type="date" id="2invoice_date" name="invoice_date"></td>
+                            <td><input type="decimal" id="2sales_price_pu" name="sales_price_pu" ></td>
+                            <td><input type="number" id="2sales_quantity" name="sales_quantity"  ></td>
+                            <td><input type="text" id="2sales_manager" name="sales_manager"  ></td>
+                            <td><input type="text" id="2producer_model_number" name="s_producer_model_number" ></td>                                
+                            <td><input type="number" id="2customer_id" name="s_customer_id"></td>
+                        </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+
+</body>

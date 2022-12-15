@@ -1,0 +1,323 @@
+<!--
+-- -------------------------------------------------------------
+-- Project Step 3 DRAFT
+-- -------------------------------------------------------------
+-- Group:           78
+-- Team Name:       Database Due
+-- Team Members:    Emma Babcock & Serkan Bayramoglu
+-- -------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+<!--    <script src="{{ url_for('static', filename='js/mainscript.js') }}"></script> -->
+
+</head>
+<body>
+
+<!--- Brands --->
+    {% if table_name == "Brands" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Brand Id</th>
+                    <th>Brand Name</th>
+                    <th>Company Name (*)</th>
+                    <th>Company Contact Details (*)</th>
+                    <th>Service Contact Details (*)</th>
+                    <th>Company Website (*)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="brand_id" min=1 ></td>
+                    <td><input type="text" name="brand_name" maxlength="45"></td>
+                    <td><input type="text" name="company_name" maxlength="45"></td>
+                    <td><input type="text" name="company_contact_details" maxlength="200"></td>
+                    <td><input type="text" name="service_contact_details" maxlength="200"></td>
+                    <td><input type="text" name="company_website" maxlength="100"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div> (*) Will retrieve records which contain the entered string (if entered) </div>
+    {% endif %} 
+
+
+<!--- Items --->
+    {% if table_name == "Items" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Id</th>
+                    <th>Product Group (*)</th>
+                    <th>Brand Name</th>
+                    <th>Guarantee Terms (*)</th>
+                    <th>Producer Model Number</th>
+                    <th>Product Dimensions</th>
+                    <th>Package Dimensions</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="item_id" min=1></td>
+                    <td><input type="text" name="product_group" maxlength="100"></td>
+                    <td>
+                        <select name="brand_name">
+                            <option value=""selected></option>
+                        {% for item in data_brands %}
+                            <option value="{{ item['brand_name'] }}"> {{item['brand_name']}}</option> 
+                        {% endfor %} 
+                        </select>
+                    </td>
+                    <td><input type="text" name="guarantee_terms" maxlength="400"></td>
+                    <td><input type="text" name="producer_model_number" maxlength="45"> </td>
+                    <td><input type="text" name="product_dimensions" maxlength="45"></td>
+                    <td><input type="text" name="package_dimensions" maxlength="45"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product description (*)</th>
+                    <th>Current Price (US$ pu)</th>
+                    <th>Quantity in Warehouse</th>
+                    <th>Section in Warehouse (*)</th>
+                    <th>Quantity in Store</th>
+                    <th>Section in Store (*)</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="product_description" maxlength="200"></td>
+                    <td><input type="decimal" name="current_price_pu" min=0.00></td>
+                    <td><input type="number" name="available_quantity_warehouse" min=0></td>
+                    <td><input type="text" name="section_warehouse" maxlength="45"></td>
+                    <td><input type="number" name="available_quantity_store" min=0></td>
+                    <td><input type="text" name="section_store" maxlength="45"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div> (*) Will retrieve records which contain the entered string (if entered) </div>
+    {% endif %} 
+
+
+<!--- Customers --->
+    {% if table_name == "Customers" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Id</th>
+                    <th>Name (*)</th>
+                    <th>Surname (*)</th>
+                    <th>Phone Number (*)</th>
+                    <th>Signup Date</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="customer_id" min=1 ></td>
+                    <td><input type="text" name="name" maxlength="45" ></td>
+                    <td><input type="text" name="surname" maxlength="45" ></td>
+                    <td><input type="text" name="phone_number" maxlength="15"></td>
+                    <td><input type="date" name="signup_date" ></td>
+                </tr>
+            </tbody>
+        </table>
+        <div> (*) Will retrieve records which contain the entered string (if entered) </div>
+    {% endif %} 
+
+
+<!--- OrderDetails --->
+    {% if table_name == "OrderDetails" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OrderDetail Id</th>
+                            <th>Order Invoice Number</th>
+                            <th>Producer Model Number</th>
+                            <th>Order Quantity</th>
+                            <th>Order Price (US$ pu)</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td><input type="number" name="order_details_id" min=1></td>
+                                <td>
+                                    <select name="order_invoice_number">
+                                        <option selected></option>  <!-- This is for null value-->
+                                            {% for item in data_order_invoice_numbers %}
+                                                <option value="{{ item['order_invoice_number'] }}"> {{item['order_invoice_number']}}</option> 
+                                            {% endfor %} 
+                                    </select>  
+                                </td>
+                                <td>
+                                    <select name="producer_model_number">
+                                        <option selected></option>  <!-- This is for null value-->
+                                            {% for item in data_producer_model_numbers %}
+                                                <option value="{{ item['producer_model_number'] }}"> {{item['producer_model_number']}}</option> 
+                                            {% endfor %} 
+                                    </select>                                
+                                </td>
+                                <td><input type="number" name="order_quantity" min=0></td>
+                                <td><input type="decimal" name="order_price_pu" min=0.00></td>
+                            </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+
+<!--- Orders --->
+    {% if table_name == "Orders" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Invoice Number</th>
+                            <th>Order Date</th>
+                            <th>Expected Arrival Date</th>
+                            <th>Arrival Date</th>
+                            <th>Total Price (US$)</th>
+                            <th>Has Arrived</th>
+                            <th>Supplier Name</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td><input type="number" name="order_id" min=1></td>
+                                <td><input type="text" name="order_invoice_number" maxlength="45"></td>
+                                <td><input type="date" name="order_date"></td>
+                                <td><input type="date" name="expected_arrival_date" ></td>
+                                <td><input type="date" name="arrival_date"></td>
+                                <td><input type="decimal" name="total_price" min=0.00></td>
+                                <td>
+                                    <select name="has_arrived">
+                                        <option selected></option>     
+                                        <option value="Yes">Yes</option> 
+                                        <option value="No">No</option> 
+                                    </select>
+                                </td>                                
+                                <td>
+                                    <select name="supplier_name">
+                                        <option selected></option>     <!-- This is the null value -->
+                                            {% for item in data_suppliers %}
+                                                <option value="{{ item['supplier_name'] }}"> {{item['supplier_name']}}</option> 
+                                            {% endfor %} 
+                                    </select>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+
+<!--- Sales --->
+    {% if table_name == "Sales" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sale Id</th>
+                            <th>Invoice Number</th>
+                            <th>Invoice Date</th>
+                            <th>Sales Price (US$ pu)</th>
+                            <th>Sales Quantity</th>
+                            <th>Sales Manager</th>
+                            <th>Producer Model Number</th>
+                            <th>Customer</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td><input type="number" id="sale_id" name="sale_id" min=1 value={{data_1.sale_id}}></td>
+                                <td><input type="text" id="invoice_number" name="invoice_number" maxlength="45" value={{data_1.invoice_number}}></td>
+                                <td><input type="date" id="invoice_date" name="invoice_date" value={{data_1.invoice_date}}></td>
+                                <td><input type="decimal" id="sales_price_pu" name="sales_price_pu" min=0.00 value={{data_1.sales_price_pu}}></td>
+                                <td><input type="number" id="sales_quantity" name="sales_quantity" maxlength="45" min=0 value={{data_1.sales_quantity}}></td>
+                                <td><input type="text" id="sales_manager" name="sales_manager" maxlength="45" value={{data_1.sales_manager}}></td>
+                                <td style="white-space:nowrap;">
+                                    <input disabled type="text" id="producer_model_number" name="producer_model_number" style="width: 3cm;" {%if data_1.s_producer_model_number %} value={{data_1.s_producer_model_number}} {% endif %} >
+                                    <img {%if data_1.s_producer_model_number == null %} hidden {% elif data_1.s_producer_model_number == "" %} hidden {%else%} {% endif %} id="item_remove" src="{{ url_for('static', filename='img/cross.png')}}" height="25px">
+                                    <input {%if data_1.s_producer_model_number != null %} {%if data_1.s_producer_model_number != "" %} hidden {% endif %} {% endif %} class="buttonclass_2" type="button" id="item_select" name="button_selection" value="+">
+                                </td>
+                                <td style="white-space:nowrap;">
+                                    <input disabled type="number" id="customer_id" name="customer_id" style="width: 2cm;" {%if data_1.s_customer_id %} value={{data_1.s_customer_id}} {% endif %} >
+                                    <img {%if data_1.s_customer_id == null %} hidden {% elif data_1.s_customer_id == "" %} hidden {%else%} {% endif %} id="customer_remove" src="{{ url_for('static', filename='img/cross.png')}}" height="25px">
+                                    <input {%if data_1.s_customer_id != null %} {%if data_1.s_customer_id != "" %} hidden {% endif %} {% endif %} class="buttonclass_2" type="button" id="customer_select" name="button_selection" value="+">
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>        
+    {% endif %} 
+
+<!--- Suppliers --->
+    {% if table_name == "Suppliers" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Supplier Id</th>
+                    <th>Supplier Name (*)</th>
+                    <th>Contact Details (*)</th>
+                    <th>Contact Person (*)</th>
+                    <th>Account Manager</th>
+                </tr>		
+            </thead>
+            <tbody>
+                    <tr>
+                        <td><input type="number" name="supplier_id" min=1></td>
+                        <td><input type="text" name="supplier_name" maxlength="45"></td>
+                        <td><input type="text" name="contact_details" maxlength="250"></td>
+                        <td><input type="text" name="contact_person" maxlength="100"></td>
+                        <td><input type="text" name="account_manager" maxlength="45"></td>
+                    </tr>
+            </tbody>
+        </table>
+        <div> (*) Will retrieve records which contain the entered string (if entered) </div>
+    {% endif %} 
+
+
+<!--- SuppliersForItems --->
+    {% if table_name == "SuppliersForItems" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>suppliers_for_items_id</th>
+                            <th>Supplier Name</th>
+                            <th>producer_model_number</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td><input type="number" name="suppliers_for_items_id" min=1></td>
+                                <td>
+                                    <select name="supplier_name">
+                                        <option selected></option>     <!-- This is the null value -->
+                                            {% for item in data_suppliers %}
+                                                <option value="{{ item['supplier_name'] }}"> {{item['supplier_name']}}</option> 
+                                            {% endfor %} 
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="producer_model_number">
+                                        <option selected></option>
+                                            {% for item in data_producer_model_numbers %}
+                                                <option value="{{ item['producer_model_number'] }}"> {{item['producer_model_number']}}</option> 
+                                            {% endfor %} 
+                                    </select>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+</body>
+
+

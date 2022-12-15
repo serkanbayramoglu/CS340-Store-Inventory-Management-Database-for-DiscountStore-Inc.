@@ -1,0 +1,342 @@
+<!--
+-- -------------------------------------------------------------
+-- Project Step 3 DRAFT
+-- -------------------------------------------------------------
+-- Group:           78
+-- Team Name:       Database Due
+-- Team Members:    Emma Babcock & Serkan Bayramoglu
+-- -------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brands</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<!--- Brands --->
+    {% if table_name == "Brands" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Brand Id</th>
+                    <th>Brand Name</th>
+                    <th>Company Name</th>
+                    <th>Company Contact Details</th>
+                    <th>Service Contact Details</th>
+                    <th>Company Website</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{data_1.brand_id}}</td>
+                    <td><input type="text" name="brand_name" maxlength="45" value="{{data_1.brand_name}}" required></td>
+                    <td><input type="text" name="company_name" maxlength="45" value="{{data_1.company_name}}" required></td>
+                    <td><input type="text" name="company_contact_details" maxlength="200" value="{{data_1.company_contact_details}}" required></td>
+                    <td><input type="text" name="service_contact_details" maxlength="200" value="{{data_1.service_contact_details}}" required></td>                        
+                    <td><input type="text" name="company_website" maxlength="100" value="{{data_1.company_website}}" required></td>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %} 
+
+
+<!--- Items --->
+    {% if table_name == "Items" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Id</th>
+                    <th>Product Group</th>
+                    <th>Brand Name</th>
+                    <th>Guarantee Terms</th>
+                    <th>Producer Model Number</th>
+                    <th>Product Dimensions</th>
+                    <th>Package Dimensions</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{data_1.item_id}}</td>
+                    <td><input type="text" name="product_group" maxlength="100" value="{{data_1.product_group}}" required></td>
+                    <td>
+                        <select name="brand_name" required>
+                            {% for item in data_brands %}
+                                {% if item['brand_name'] == data_1.brand %} 
+                                    <option value="{{ item['brand_name'] }}" selected> {{item['brand_name']}}</option>
+                                {% else %} 
+                                    <option value="{{ item['brand_name'] }}"> {{item['brand_name']}}</option>
+                                {% endif %} 
+                            {% endfor %} 
+                        </select>                          
+                    </td>
+                    <td><input type="text" name="guarantee_terms" maxlength="400" value="{{data_1.guarantee_terms}}" required></td>
+                    <td><input type="text" name="producer_model_number" maxlength="45" value="{{data_1.producer_model_number}}" required></td>
+                    <td><input type="text" name="product_dimensions" maxlength="45" value='{{data_1.product_dimensions}}'></td>
+                    <td><input type="text" name="package_dimensions" maxlength="45" value='{{data_1.package_dimensions}}'></td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product description</th>
+                    <th>Current Price (US$ pu)</th>
+                    <th>Quantity in Warehouse</th>
+                    <th>Section in Warehouse</th>
+                    <th>Quantity in Store</th>
+                    <th>Section in Store</th>
+            <!---   <th>Quantity to Receive</th>   --->
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="product_description" maxlength="200" value='{{data_1.product_description}}'></td>
+                    <td><input type="decimal" name="current_price_pu" min=0.00 value={{data_1.current_price_pu}} required></td>
+                    <td><input type="number" name="available_quantity_warehouse" min=0 value={{data_1.available_quantity_warehouse}} required></td>
+                    <td><input type="text" name="section_warehouse" maxlength="45" value="{{data_1.section_warehouse}}"></td>
+                    <td><input type="number" name="available_quantity_store" min=0 value={{data_1.available_quantity_store}} required></td>
+                    <td><input type="text" name="section_store" maxlength="45" value="{{data_1.section_store}}"></td>
+                <!---   <td>{{quantity_to_receive}}</td>    --->
+                </tr>
+            </tbody>
+        </table>
+    {% endif %} 
+
+
+<!--- Customers --->
+    {% if table_name == "Customers" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Phone Number</th>
+                    <th>Signup Date</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{data_1.customer_id}}</td>
+                    <td><input type="text" name="name" maxlength="45" value="{{data_1.name}}" required></td>
+                    <td><input type="text" name="surname" maxlength="45" value="{{data_1.surname}}"></td>
+                    <td><input type="text" name="phone_number" maxlength="15" value="{{data_1.phone_number}}" required></td>
+                    <td><input type="date" name="signup_date" value='{{data_1.signup_date}}' required></td>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %} 
+
+
+<!--- OrderDetails --->
+    {% if table_name == "OrderDetails" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OrderDetail Id</th>
+                            <th>Order Invoice Number</th>
+                            <th>Producer Model Number</th>
+                            <th>Order Quantity</th>
+                            <th>Order Price (US$ pu)</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{data_1.order_details_id}}</td>
+                            <td>
+                                <select name="order_invoice_number">
+                                    <option></option>
+                                    {% for item in data_order_invoice_numbers %}
+                                        {% if item['order_invoice_number'] == data_1.order_id %} 
+                                            <option value="{{ item['order_invoice_number'] }}" selected> {{item['order_invoice_number']}}</option>
+                                        {% else %} 
+                                            <option value="{{ item['order_invoice_number'] }}"> {{item['order_invoice_number']}}</option>
+                                        {% endif %} 
+                                    {% endfor %} 
+                                </select>                            
+                            </td>
+                            <td>
+                                <select name="producer_model_number">
+                                    <option></option>
+                                    {% for item in data_producer_model_numbers %}
+                                        {% if item['producer_model_number'] == data_1.producer_model_number %} 
+                                            <option value="{{ item['producer_model_number'] }}" selected> {{item['producer_model_number']}}</option>
+                                        {% else %} 
+                                            <option value="{{ item['producer_model_number'] }}"> {{item['producer_model_number']}}</option>
+                                        {% endif %} 
+                                    {% endfor %} 
+                                </select>                           
+                            </td>
+                            <td><input type="number" name="order_quantity" min=0 value={{data_1.order_quantity}} required></td>
+                            <td><input type="decimal" name="order_price_pu" min=0.00 value={{data_1.order_price_pu}} required></td>
+                        </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+
+<!--- Orders --->
+    {% if table_name == "Orders" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Invoice Number</th>
+                            <th>Order Date</th>
+                            <th>Expected Arrival Date</th>
+                            <th>Arrival Date</th>
+                            <th>Total Price (US$)</th>
+                            <th>Has Arrived</th>
+                            <th>Supplier Name</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{data_1.order_id}}</td>
+                            <td><input type="text" name="order_invoice_number" maxlength="45" value={{data_1.order_invoice_number}} required></td>
+                            <td><input type="date" name="order_date" value='{{data_1.order_date}}' required></td>
+                            <td><input type="date" name="expected_arrival_date" value='{{data_1.expected_arrival_date}}'></td>
+                            <td><input type="date" name="arrival_date" value='{{data_1.arrival_date}}'></td>
+                            <td><input type="decimal" name="total_price" min=0.00 value={{data_1.total_price}} required></td>
+                            <td>
+                                <select name="has_arrived" required>
+                                    {% if "Yes" == data_1.has_arrived %} 
+                                        <option value="Yes" selected>Yes</option>
+                                        <option value="No">No</option>
+                                    {% else %} 
+                                        <option value="Yes">Yes</option>
+                                        <option value="No" selected>No</option>
+                                    {% endif %} 
+                                </select>
+                            </td>
+                            <td>
+                                <select name="supplier_name">
+                                    <option></option>
+                                    {% for item in data_suppliers %}
+                                        {% if item['supplier_name'] == data_1.supplier_id %} 
+                                            <option value="{{ item['supplier_name'] }}" selected> {{item['supplier_name']}}</option>
+                                        {% else %} 
+                                            <option value="{{ item['supplier_name'] }}"> {{item['supplier_name']}}</option>
+                                        {% endif %} 
+                                    {% endfor %} 
+                                </select>                         
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+
+<!--- Sales --->
+    {% if table_name == "Sales" %}
+        {% if data_1 %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sale Id</th>
+                            <th>Invoice Number</th>
+                            <th>Invoice Date</th>
+                            <th>Sales Price (US$ pu)</th>
+                            <th>Sales Quantity</th>
+                            <th>Sales Manager</th>
+                            <th>Producer Model Number</th>
+                            <th>Customer</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="number" id="sale_id" name="sale_id" value="{{data_1.sale_id}}" disabled></td>
+                            <td><input type="text" id="invoice_number" name="invoice_number" maxlength="45" value="{{data_1.invoice_number}}" required></td>
+                            <td><input type="date" id="invoice_date" name="invoice_date" value='{{data_1.invoice_date}}' required></td>
+                            <td><input type="decimal" id="sales_price_pu" name="sales_price_pu" min=0.00 value={{data_1.sales_price_pu}} required></td>
+                            <td><input type="number" id="sales_quantity" name="sales_quantity" min=0 value={{data_1.sales_quantity}} required></td>
+                            <td><input type="text" id="sales_manager" name="sales_manager" maxlength="45" value="{{data_1.sales_manager}}" required></td>
+                            <td style="white-space:nowrap;">
+                                <input disabled type="text" id="producer_model_number" name="producer_model_number"  style="width: 3cm;" value={{data_1.s_producer_model_number}}>
+                                <img {%if data_1.s_producer_model_number == null %} hidden {% elif data_1.s_producer_model_number == "" %} hidden {% endif %} id="item_remove" src="{{ url_for('static', filename='img/cross.png')}}" height="25px">
+                                <input {%if data_1.s_producer_model_number != null %} {%if data_1.s_producer_model_number != "" %} hidden {% endif %} {% endif %} class="buttonclass_2" type="button" id="item_select" name="button_selection" value="+">
+                            </td>                                
+                            <td style="white-space:nowrap;">
+                                <input disabled type="number" id="customer_id" name="customer_id" style="width: 2cm;" value={{data_1.s_customer_id}} >
+                                <img {%if data_1.s_customer_id == null %} hidden {% elif data_1.s_customer_id == "" %} hidden {% endif %} id="customer_remove" src="{{ url_for('static', filename='img/cross.png')}}" height="25px">
+                                <input {%if data_1.s_customer_id != null %} {%if data_1.s_customer_id != "" %} hidden {% endif %} {% endif %} class="buttonclass_2" type="button" id="customer_select" name="button_selection" value="+">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        {% endif %}
+    {% endif %} 
+
+
+<!--- Suppliers --->
+    {% if table_name == "Suppliers" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Supplier Id</th>
+                            <th>Supplier Name</th>
+                            <th>Contact Details</th>
+                            <th>Contact Person</th>
+                            <th>Account Manager</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{data_1.supplier_id}}</td>
+                            <td><input type="text" name="supplier_name" maxlength="45" value="{{data_1.supplier_name}}" required></td>
+                            <td><input type="text" name="contact_details" maxlength="250" value="{{data_1.contact_details}}" required></td>
+                            <td><input type="text" name="contact_person" maxlength="100" value="{{data_1.contact_person}}" required></td>
+                            <td><input type="text" name="account_manager" maxlength="45" value="{{data_1.account_manager}}" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+
+<!--- SuppliersForItems --->
+    {% if table_name == "SuppliersForItems" %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Supplier For Item Id</th>
+                            <th>Supplier Name</th>
+                            <th>Producer Model Number</th>
+                        </tr>		
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{data_1.suppliers_for_items_id}} </td> 
+                            <td>
+                                <select name="supplier_name" required>
+                                            {% for item in data_suppliers %}
+                                                {% if item['supplier_name'] == data_1.supplier_id %} 
+                                                    <option value="{{ item['supplier_name'] }}" selected> {{item['supplier_name']}}</option>
+                                                {% else %} 
+                                                    <option value="{{ item['supplier_name'] }}"> {{item['supplier_name']}}</option>
+                                                {% endif %} 
+                                            {% endfor %} 
+                                </select>
+                            </td>
+                            <td>
+                                <select name="producer_model_number" required>
+                                            {% for item in data_producer_model_numbers %}
+                                                {% if item['producer_model_number'] == data_1.producer_model_number %} 
+                                                    <option value="{{ item['producer_model_number'] }}" selected> {{item['producer_model_number']}}</option>
+                                                {% else %} 
+                                                    <option value="{{ item['producer_model_number'] }}"> {{item['producer_model_number']}}</option>
+                                                {% endif %} 
+                                            {% endfor %} 
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    {% endif %} 
+
+</body>

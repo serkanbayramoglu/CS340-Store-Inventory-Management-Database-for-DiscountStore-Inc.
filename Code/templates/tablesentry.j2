@@ -1,0 +1,332 @@
+<!--
+-- -------------------------------------------------------------
+-- Project Step 3 DRAFT
+-- -------------------------------------------------------------
+-- Group:           78
+-- Team Name:       Database Due
+-- Team Members:    Emma Babcock & Serkan Bayramoglu
+-- -------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{table_name}}</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+        });
+    
+        $( window ).on( "load", function() {
+            $('#supportingquery_result').show();
+        });
+    </script>
+
+
+</head>
+<body>
+    <header><h1><em>DiscountStore Inc.</em> - Store & Inventory Management Database</h1><hr></header>
+    <main>
+        <div class="banner">
+            <a href="/">Home</a>
+            <a href='/Brands'>Brands</a>
+            <a href="/Customers">Customers</a>
+            <a href="/Suppliers">Suppliers</a>
+            <a href="/Items">Items</a>
+            <a href="/SuppliersForItems">SuppliersForItems</a>
+            <a href="/Sales">Sales</a>
+            <a href="/Orders">Orders</a>
+            <a href="/OrderDetails">OrderDetails</a>
+        </div>
+        <hr>
+        <h1>{{table_name}}</h1>
+        <div>Please select from below to create, retrieve, update, or delete data within the {{table_name}} table.</div><br/>
+        <div id="main">
+            <form id="main_form" action="/{{table_name}}/action" method="get">
+                <fieldset id="read_query">
+                <legend> Please select action:</legend>
+                <input type="radio" name="select_option" id="new_entry" value="new_entry">
+                <label for="new_entry">Enter New {{table_name}} Data</label>
+                <br/>
+                <input type="radio" name="select_option" id="retrieve_all" value="retrieve_all" checked="True">
+                <label for="retrieve_all">Retrieve All {{table_name}}</label>
+                <br/>
+                <input type="radio" name="select_option" id="retrieve_query" value="retrieve_query">
+                <label for="retrieve_query">Retrieve Queried {{table_name}}</label>
+                <br />
+                <br />
+                <button id="select_button">SELECT</button>
+                </fieldset>
+            </form>
+        </div>
+        <div id = "query_table">
+        {% if action_name == "retrieve_query" %}
+            <div>
+                <br/>
+                <h2>Query Data</h2>
+                <div>Please fill fields to be queried</div>
+                <form id="query_form" action="/{{table_name}}/action" method="get">
+                    {% include 'queryformats.j2' %}
+                    <br/>
+                    <button id="submit_button">SUBMIT</button>
+                    <button type="reset">RESET</button>
+                    <a href="/{{table_name}}" class="buttonclass">CANCEL</a>
+                </form>
+            </div>
+            <div id="select_table" hidden>
+                <form id="supportingquery_form" action="/{{table_name}}/supportingaction" method="get">
+                    <input type="hidden" id="supporting_table" name="supporting_table" value="">
+                    <input type="hidden" id="action_name" name="action_name" value={{action_name}}>
+                    <div id="show_customers" hidden>
+                        <br/><br/>
+                        {% include 'supportingcustomer.j2' %}
+                        <br/>
+                    </div>
+                    <div id="show_items" hidden>
+                        <br/><br/>
+                        {% include 'supportingitem.j2' %}
+                        <br/>
+                    </div>
+                    <div hidden>
+                    {% include 'queryformats2.j2' %}
+                    <br/>
+                    </div>
+                    <button id="show_button">SHOW</button>
+                    <button type="reset">RESET</button>
+                    <input class="buttonclass" type="button" id="supporting_cancel" value="CANCEL">                
+                </form>
+            </div>
+            <div id="supportingquery_result" hidden>
+                {% if data_2 %}
+                    <br/>
+                    <h2>Please select</h2>
+                    {% include 'retrievedsupporting.j2' %}
+                    <br/>
+                    <input class="buttonclass" type="button" id="results_cancel" value="CANCEL">                
+                {% endif %} 
+            </div>
+        {% endif %} 
+        </div>
+        <div id="delete_confirm">
+        {% if action_name == "delete_confirm" %}
+            {% if data %}
+                <br/>
+                <h2>Delete Data</h2>
+                <form id="delete_execute" action="../../delete/{{table_name}}/{{items_id}}" method="POST">
+                    <div>ARE YOU SURE YOU WANT TO DELETE THE BELOW ENTRY?</div>
+                    {% include 'retrieveddata.j2' %}
+                    <br/>
+                    <button id="delete_button" name="delete_button" value="DELETE">DELETE</button> 
+                    <a href="/{{table_name}}" class="buttonclass">CANCEL</a>
+                </form>
+            {% endif %} 
+        {% endif %} 
+        </div>
+        <div id="edit_entry">
+        {% if action_name == "edit_entry" %}
+                <br/>
+                <h2>Edit Data</h2>
+                <form id="edit_execute" action="../../edit/{{table_name}}/{{items_id}}" method="POST">
+                    <div>Please edit in the below boxes</div>
+                    {% include 'editformats.j2' %}
+                    <br/>
+                    <button id="edit_button" name="edit_button" value="SAVE">SAVE</button> 
+                    <a href="/{{table_name}}" class="buttonclass">CANCEL</a>
+                </form>
+            <div id="select_table" hidden>
+                <form id="supportingquery_form" action="/{{table_name}}/supportingaction" method="get">
+                    <input type="hidden" id="supporting_table" name="supporting_table" value="">
+                    <input type="hidden" id="action_name" name="action_name" value={{action_name}}>
+                    <input type="hidden" id="items_id" name="items_id" value={{items_id}}>
+                    <div id="show_customers" hidden>
+                        <br/><br/>
+                        {% include 'supportingcustomer.j2' %}
+                        <br/>
+                    </div>
+                    <div id="show_items" hidden>
+                        <br/><br/>
+                        {% include 'supportingitem.j2' %}
+                        <br/>
+                    </div>
+                    <div hidden>
+                    {% include 'editformats2.j2' %}
+                    <br/>
+                    </div>
+                    <button id="show_button">SHOW</button>
+                    <button type="reset">RESET</button>
+                    <input class="buttonclass" type="button" id="supporting_cancel" value="CANCEL">                
+                </form>
+            </div>
+            <div id="supportingquery_result" hidden>
+                {% if data_2 %}print(table_to_show) console.log(table_to_show)
+                    <br/>
+                    <h2>Please select</h2>
+                    {% include 'retrievedsupporting.j2' %}
+                    <br/>
+                    <input class="buttonclass" type="button" id="results_cancel" value="CANCEL">                
+                {% endif %} 
+            </div>
+
+        {% endif %} 
+        </div>
+        <div id="enter_new">
+        {% if action_name == "enter_new" %}
+                <br/>
+                <h2>Enter New Data</h2>
+                <form id="enter_execute" action="/{{table_name}}/insert" method="POST">
+                    <div>Please enter new data</div>
+                    {% include 'newformats.j2' %}
+                    <br/>
+                    <button id="add_button" name="add_button" value="SAVE">SAVE</button> 
+                    <button type="reset" name="add_button" value="RESET">RESET</button>
+                    <a href="/{{table_name}}" class="buttonclass">CANCEL</a>
+                </form>
+            <div id="select_table" hidden>
+                <form id="supportingquery_form" action="/{{table_name}}/supportingaction" method="get">
+                    <input type="hidden" id="supporting_table" name="supporting_table" value="">
+                    <input type="hidden" id="action_name" name="action_name" value={{action_name}}>
+                    <div id="show_customers" hidden>
+                        <br/><br/>
+                        {% include 'supportingcustomer.j2' %}
+                        <br/>
+                    </div>
+                    <div id="show_items" hidden>
+                        <br/><br/>
+                        {% include 'supportingitem.j2' %}
+                        <br/>
+                    </div>
+                    <div hidden>
+                    {% include 'newformats2.j2' %}
+                    <br/>
+                    </div>
+                    <button id="show_button">SHOW</button>
+                    <button type="reset">RESET</button>
+                    <input class="buttonclass" type="button" id="supporting_cancel" value="CANCEL">                
+                </form>
+            </div>
+            <div id="supportingquery_result" hidden>
+                {% if data_2 %}
+                    <br/>
+                    <h2>Please select</h2>
+                    {% include 'retrievedsupporting.j2' %}
+                    <br/>
+                    <input class="buttonclass" type="button" id="results_cancel" value="CANCEL">                
+                {% endif %} 
+            </div>
+        {% endif %} 
+        </div>
+        <div id="query_result">
+        {% if action_name == "retrieve_data" %}
+            {% if data %}
+                <br/>
+                <h2>Query Result</h2>
+                {% include 'retrieveddata.j2' %}
+            {% endif %} 
+        {% endif %} 
+        </div>
+        <div id="error_messages">
+            {% if error_message %}
+                <br/>
+                <div>{{error_message}}</div>
+            {% endif %} 
+        </div>
+        <div id="result_messages">
+            {% if result_message %}
+                <br/>
+                <div>{{result_message}}</div>
+            {% endif %} 
+        </div>
+        <br/>
+    </main>
+
+    {% include 'footer.j2' %}
+    
+</body>
+<script>
+    $(document).ready(function() {  
+        $('#customer_select').click(function(){
+            $("#2sale_id").attr('value', $('#sale_id').val());
+            $("#2invoice_number").attr('value', $('#invoice_number').val());
+            $("#2invoice_date").attr('value', $('#invoice_date').val());
+            $("#2sales_price_pu").attr('value', $('#sales_price_pu').val());
+            $("#2sales_quantity").attr('value', $('#sales_quantity').val());
+            $("#2sales_manager").attr('value', $('#sales_manager').val());          
+            $("#2customer_id").attr('value', $('#customer_id').val());          
+            $("#2producer_model_number").attr('value', $('#producer_model_number').val()); 
+            $("#supporting_table").attr('value', "Customers");  
+            $('#select_table').show();
+            $('#show_customers').show();
+            $('#show_items').hide();
+            $('#supportingquery_result').hide();
+        });
+        $('#item_select').click(function(){
+            $("#2sale_id").attr('value', $('#sale_id').val());
+            $("#2invoice_number").attr('value', $('#invoice_number').val());
+            $("#2invoice_date").attr('value', $('#invoice_date').val());
+            $("#2sales_price_pu").attr('value', $('#sales_price_pu').val());
+            $("#2sales_quantity").attr('value', $('#sales_quantity').val());
+            $("#2sales_manager").attr('value', $('#sales_manager').val());          
+            $("#2customer_id").attr('value', $('#customer_id').val());          
+            $("#2producer_model_number").attr('value', $('#producer_model_number').val()); 
+            $("#supporting_table").attr('value', "Items");  
+            $('#select_table').show();
+            $('#show_customers').hide();
+            $('#show_items').show();
+            $('#supportingquery_result').hide();
+        });
+        $('#customer_remove').click(function(){
+            $("#customer_id").attr('value', "");          
+            $('#customer_select').show();
+            $('#customer_remove').hide();
+        });
+        $('#item_remove').click(function(){
+            $("#producer_model_number").attr('value', ""); 
+            $('#item_select').show();
+            $('#item_remove').hide();
+        });
+        $('#supporting_cancel').click(function(){
+            $('#select_table').hide();
+            $('#supportingquery_result').hide();
+        });
+        $('#results_cancel').click(function(){
+            $('#supportingquery_result').hide();
+        });
+        $('#show_button').click(function(){
+            $('#supportingquery_result').show();
+        });
+        $('.customer_id_select').click(function(){
+            $("#customer_id").attr('value', $(this).attr('value'));
+            $('#supportingquery_result').hide();
+            $('#customer_select').hide();
+            $('#customer_remove').show();
+        });
+        $('.producer_model_number_select').click(function(){
+            $("#producer_model_number").attr('value', $(this).attr('value'));
+            $('#supportingquery_result').hide();
+            $('#item_select').hide();
+            $('#item_remove').show();
+        });
+        $('#submit_button').click(function(){
+            $("#producer_model_number").prop('disabled', false);
+            $("#customer_id").prop('disabled', false);
+        });
+        $('#add_button').click(function(){
+            $("#producer_model_number").prop('disabled', false);
+            $("#customer_id").prop('disabled', false);
+        });
+        $('#edit_button').click(function(){
+            $("#producer_model_number").prop('disabled', false);
+            $("#customer_id").prop('disabled', false);
+            $("#sale_id").prop('disabled', false);
+        });
+    });
+</script>
+</html>
+
+

@@ -1,0 +1,84 @@
+<!--
+-- -------------------------------------------------------------
+-- Project Step 3 DRAFT
+-- -------------------------------------------------------------
+-- Group:           78
+-- Team Name:       Database Due
+-- Team Members:    Emma Babcock & Serkan Bayramoglu
+-- -------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supporting Query</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+<!--    <script src="{{ url_for('static', filename='js/mainscript.js') }}"></script> -->
+
+</head>
+<body>
+<!--- Items --->
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Id</th>
+                    <th>Product Group (*)</th>
+                    <th>Brand Name</th>
+                    <th>Guarantee Terms (*)</th>
+                    <th>Producer Model Number</th>
+                    <th>Product Dimensions</th>
+                    <th>Package Dimensions</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input id="3item_id" type="number" name="item_id" min=1></td>
+                    <td><input type="text" name="product_group" maxlength="100"></td>
+                    <td>
+                        <select name="brand_name">
+                            <option value=""selected></option>
+                        {% for item in data_brands %}
+                            <option value="{{ item['brand_name'] }}"> {{item['brand_name']}}</option> 
+                        {% endfor %} 
+                        </select>
+                    </td>
+                    <td><input type="text" name="guarantee_terms" maxlength="400"></td>
+                    <td><input type="text" name="producer_model_number" maxlength="45"> </td>
+                    <td><input type="text" name="product_dimensions" maxlength="45"></td>
+                    <td><input type="text" name="package_dimensions" maxlength="45"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product description (*)</th>
+                    <th>Current Price (US$ pu)</th>
+                    <th>Quantity in Warehouse</th>
+                    <th>Section in Warehouse (*)</th>
+                    <th>Quantity in Store</th>
+                    <th>Section in Store (*)</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="product_description" maxlength="200"></td>
+                    <td><input type="decimal" name="current_price_pu" min=0.00></td>
+                    <td><input type="number" name="available_quantity_warehouse" min=0></td>
+                    <td><input type="text" name="section_warehouse" maxlength="45"></td>
+                    <td><input type="number" name="available_quantity_store" min=0></td>
+                    <td><input type="text" name="section_store" maxlength="45"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div> (*) Will retrieve records which contain the entered string (if entered) </div>
+
+</body>
+
+

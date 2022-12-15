@@ -1,0 +1,49 @@
+<!--
+-- -------------------------------------------------------------
+-- Project Step 3 DRAFT
+-- -------------------------------------------------------------
+-- Group:           78
+-- Team Name:       Database Due
+-- Team Members:    Emma Babcock & Serkan Bayramoglu
+-- -------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supporting Query</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+<!--    <script src="{{ url_for('static', filename='js/mainscript.js') }}"></script> -->
+
+</head>
+<body>
+<!--- Customers --->
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Id</th>
+                    <th>Name (*)</th>
+                    <th>Surname (*)</th>
+                    <th>Phone Number (*)</th>
+                    <th>Signup Date</th>
+                </tr>		
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input id="3customer_id" type="number" name="customer_id" min=1></td>
+                    <td><input type="text" name="name" maxlength="45"></td>
+                    <td><input type="text" name="surname" maxlength="45"></td>
+                    <td><input type="text" name="phone_number" maxlength="15"></td>
+                    <td><input type="date" name="signup_date"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div> (*) Will retrieve records which contain the entered string (if entered) </div>
+</body>
+
+

@@ -1,0 +1,54 @@
+<!--
+-- -------------------------------------------------------------
+-- Project Step 3 DRAFT
+-- -------------------------------------------------------------
+-- Group:           78
+-- Team Name:       Database Due
+-- Team Members:    Emma Babcock & Serkan Bayramoglu
+-- -------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header><h1><em>DiscountStore Inc.</em> - Store & Inventory Management Database</h1><hr></header>
+    <main>
+        <div class="banner">
+            <a href="/">Home</a>
+            <a href='/Brands'>Brands</a>
+            <a href="/Customers">Customers</a>
+            <a href="/Suppliers">Suppliers</a>
+            <a href="/Items">Items</a>
+            <a href="/SuppliersForItems">SuppliersForItems</a>
+            <a href="/Sales">Sales</a>
+            <a href="/Orders">Orders</a>
+            <a href="/OrderDetails">OrderDetails</a>
+        </div>
+        <hr>
+        <h1>Homepage</h1>
+        <div>This website is designed to perform the CRUD operations on the database of DiscountStore Inc.</div>
+        <div>The database is only for the use of the authorized company employees.</div>
+        <div>Please browse from the above links to add, update, delete or edit data for the following entries:
+        <ul>
+            <li>brands: Performs all CRUD operations for Brands table</li>
+            <li>customers: Performs all CRUD operations for Customers table</li>
+            <li>suppliers: Performs all CRUD operations for Suppliers table</li>
+            <li>items: Performs all CRUD operations for Items table</li>
+            <li>suppliersforitems: Performs all CRUD operations for SuppliersForItems table</li>
+            <li>sales: Performs all CRUD operations for Sales table</li>
+            <li>orders: Performs all CRUD operations for Orders table</li>
+            <li>orderdetails: Performs all CRUD operations for OrderDetails table</li>
+        </ul>
+        </div>
+    </main>
+
+    {% include 'footer.j2' %}
+
+</body>
+</html>
