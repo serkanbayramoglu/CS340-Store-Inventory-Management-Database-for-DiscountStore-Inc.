@@ -71,11 +71,11 @@ MySQL / MariaDB Database
 ├── DDL.sql
 └── DML.sql
 
-DDL.sql
+`DDL.sql`
 
 Contains the database schema, table definitions, relationships, foreign-key constraints, and sample data.
 
-DML.sql
+`DML.sql`
 
 Contains SQL queries supporting application functionality, including:
 
@@ -85,15 +85,15 @@ Contains SQL queries supporting application functionality, including:
 * DELETE
 * JOIN operations
 
-Code/app.py
+`Code/app.py`
 
 Contains the Flask application, routing logic, database interaction, and CRUD functionality.
 
-Code/templates/
+`Code/templates/`
 
 Contains the Jinja2 templates used to generate the web interface.
 
-Running the Project
+## Running the Project
 
 This project was originally developed using Oregon State University’s CS340 database environment.
 
@@ -110,7 +110,7 @@ After configuring the database:
 
 Because this is an archived course project from 2022, dependency versions and configuration may require updating for a current environment.
 
-Academic Context
+## Academic Context
 
 This project was developed in 2022 as part of Oregon State University’s CS 340 – Introduction to Databases course.
 
@@ -124,7 +124,7 @@ The primary learning objectives included:
 * Connecting a relational database to a web application
 * Building a database-backed interface using Python and Flask
 
-Authors
+## Authors
 
 Serkan Bayramoglu
 Emma Babcock
@@ -132,6 +132,6 @@ Emma Babcock
 Oregon State University
 CS 340 – Introduction to Databases
 
-Note
+## Note
 
 This repository is preserved as an academic project demonstrating database design, SQL, Python/Flask development, and integration of a relational database with a web application.
