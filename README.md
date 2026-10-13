@@ -70,6 +70,7 @@ MySQL / MariaDB Database
 │   └── static/
 ├── DDL.sql
 └── DML.sql
+```
 
 `DDL.sql`
 
